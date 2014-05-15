@@ -22,7 +22,6 @@ var stringifyJSON = function(obj) {
 		objorlist ? stringJSON.push('true') : stringJSON.push('false');
   	}else if(typeof(objorlist)==='object'){
   		var objLength = _.keys(objorlist).length;
-  		console.log(objLength);
   		var i=0;
   		stringJSON.push('{');
   		_.each(objorlist,function(value,key){
