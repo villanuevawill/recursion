@@ -35,7 +35,30 @@ var stringifyJSON = function(obj) {
     	if(indexorkey!==undefined && indexorkey<tracker.length-1){
   			stringJSON.push(',');
   		}
+  	}else if(typeof(objorlist)==='object'){
+  		var objLength = _.keys(objorlist).length;
+  		console.log(objLength);
+  		var i=0;
+  		stringJSON.push('{');
+  		_.each(objorlist,function(value,key){
+  			if (typeof(value)==='function' || typeof(value)==='undefined'){
+  			}else{
+              stringJSON.push('\"');
+  			  stringJSON.push(key);
+  			  stringJSON.push('\":');
+  			  stringFill(value);
+  			  if (i<objLength-1) {
+  			    stringJSON.push(',');
+  			   }
+  			}
+  			i++
+  		});
+  		stringJSON.push('}');
+  		if(indexorkey!==undefined && indexorkey<tracker.length-1){
+  			stringJSON.push(',');
+  		}
   	}
+
   };
   stringFill(obj);
   return stringJSON.join('');
