@@ -5,23 +5,27 @@
 
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function(className){
-  var allElements=document.body;
-  var elements=[];
-  if (_.contains(allElements.classList,className)) {
-    elements.push(allElements);
+  var matches = [];
+
+  var checkNodes = function(node){
+// check if current element has class name , and save
+  var hasClassName = function(node){
+    return _.contains(node.classList, className);
   }
-  var findElements=function(elementlist){
-  	_.each(elementlist,function(value){
-  	  if (_.contains(value.classList,className)){
-  			elements.push(value);
-  			if(value.childNodes!==undefined){
-  				findElements(value.childNodes);
-  			}
-      }else if (value.childNodes!==undefined){
-  			findElements(value.childNodes);
-  		}
-  	});	
-  };
-  findElements(allElements.childNodes);
-  return elements;
-};
+
+  if (hasClassName(node, className)){
+    matches.push(node);
+  }
+
+// has childNodes?
+  if (node.childNodes){
+// iterate over each node and repeat.
+    _.each(node.childNodes, checkNodes);
+  }
+
+}
+  checkNodes(document.body);
+
+  return matches;
+
+}
